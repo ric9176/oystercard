@@ -11,7 +11,12 @@ class Oystercard
   end
 
   def top_up(amount)
+    fail "£90 maximum limit would be exceeded!" if limit_reached?(amount)
     @balance += amount
   end
+
+def limit_reached?(amount)
+  (@balance + amount) >= 90
+end
 
 end
