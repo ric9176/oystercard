@@ -47,11 +47,6 @@ describe Oystercard do
       expect(card.deduct(amount)).to eq Oystercard::MAXIMUM_BALANCE - amount
     end
 
-    it 'should raise error if the amount goes below 0' do
-      amount = 5
-      expect{card.deduct(Oystercard::MAXIMUM_BALANCE+amount)}.to raise_error "you don't have enough money"
-    end
-
     it 'should, on touch out, update the balance deducting the journey fare' do
       card.touch_in
       card.touch_out
