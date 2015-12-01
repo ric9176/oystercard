@@ -49,7 +49,7 @@ describe "user stories" do
   # I need to have the minimum amount (£1) for a single journey.
   it 'So that user can pay for the journey, should prevent user to touch in when balance is low' do
     oyster = Oystercard.new
-    expect {oyster.touch_in}.to raise_error
+    expect {oyster.touch_in(station)}.to raise_error
   end
 
   #   In order to pay for my journey
@@ -58,7 +58,7 @@ describe "user stories" do
   it 'So that user can pay for the journey, the correct amount should be deducted on touch out' do
     oyster = Oystercard.new
     oyster.top_up(5)
-    expect {oyster.touch_out}.to_not raise_error
+    expect {oyster.touch_out(station)}.to_not raise_error
   end
 
   # In order to pay for my journey
@@ -68,6 +68,14 @@ describe "user stories" do
     oyster = Oystercard.new
     oyster.top_up(5)
     expect {oyster.touch_in(station)}.to_not raise_error
+  end
+
+  #   In order to know where I have been
+  # As a customer
+  # I want to see to all my previous trips
+  it 'so that user can know where he has been, the card should store all previous trips' do
+    oyster = Oystercard.new
+    expect {oyster.journeys}.not_to raise_error
   end
 
 

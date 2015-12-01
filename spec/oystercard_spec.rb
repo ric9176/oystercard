@@ -4,6 +4,9 @@ describe Oystercard do
 
   subject(:card) {described_class.new}
   let(:station) { double :station }
+  let(:entry_station) { double :station }
+  let(:exit_station) { double :station }
+  let(:journey) {{entry: entry_station, exit: exit_station, }}
 
   it 'should have a balance of 0' do
     expect(card.balance).to eq 0
@@ -34,7 +37,7 @@ describe Oystercard do
 
     it 'should return in journey false after touch out is called' do
       card.touch_in(station)
-      card.touch_out
+      card.touch_out(station)
       expect(card).not_to be_in_journey
     end
 
@@ -50,21 +53,30 @@ describe Oystercard do
 
     it 'should, on touch out, update the balance deducting the journey fare' do
       card.touch_in(station)
-      card.touch_out
+      card.touch_out(station)
       expect(card.balance).to eq Oystercard::MAXIMUM_BALANCE - Oystercard::MINIMUM_FARE
     end
 
     it 'should, on touch in, record the entry station' do
       card.touch_in(station)
-      expect(card.entry_station).to eq station
+      expect(card.journey[:entry]).to eq station
     end
 
     it 'should, on touch out, reset the entry station to nil' do
       card.touch_in(station)
-      card.touch_out
-      expect(card.entry_station).to eq nil
+      card.touch_out(station)
+      expect(card.journey[:entry]).to eq nil
     end
 
+    it 'should be empty by deafault' do
+      expect(card.journeys).to be_empty
+    end
+
+    it 'stores a journey' do
+      card.touch_in(entry_station)
+      card.touch_out(exit_station)
+      expect(card.journeys).to include journey
+    end
 
   end
 
