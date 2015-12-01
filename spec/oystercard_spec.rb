@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
 
   subject(:card) {described_class.new}
+  let(:station) { double :station }
 
   it 'should have a balance of 0' do
     expect(card.balance).to eq 0
@@ -17,7 +18,7 @@ describe Oystercard do
   end
 
   it 'should raise an error when user tries to touch in if balance is lower than 1' do
-    expect {card.touch_in}.to raise_error "Your balance is too low. Please top up!"
+    expect {card.touch_in(station)}.to raise_error "Your balance is too low. Please top up!"
   end
 
   context 'while it has a working balance' do
@@ -27,12 +28,12 @@ describe Oystercard do
     end
 
     it 'should return in journey true after touch in is called' do
-      card.touch_in
+      card.touch_in(station)
       expect(card).to be_in_journey
     end
 
     it 'should return in journey false after touch out is called' do
-      card.touch_in
+      card.touch_in(station)
       card.touch_out
       expect(card).not_to be_in_journey
     end
@@ -48,10 +49,22 @@ describe Oystercard do
     end
 
     it 'should, on touch out, update the balance deducting the journey fare' do
-      card.touch_in
+      card.touch_in(station)
       card.touch_out
       expect(card.balance).to eq Oystercard::MAXIMUM_BALANCE - Oystercard::MINIMUM_FARE
     end
+
+    it 'should, on touch in, record the entry station' do
+      card.touch_in(station)
+      expect(card.entry_station).to eq station
+    end
+
+    it 'should, on touch out, reset the entry station to nil' do
+      card.touch_in(station)
+      card.touch_out
+      expect(card.entry_station).to eq nil
+    end
+
 
   end
 

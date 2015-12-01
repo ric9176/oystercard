@@ -1,5 +1,7 @@
 describe "user stories" do
 
+  let(:station) { double :station }
+
  # In order to use public transport
  # As a customer
  # I want money on my card
@@ -58,5 +60,15 @@ describe "user stories" do
     oyster.top_up(5)
     expect {oyster.touch_out}.to_not raise_error
   end
+
+  # In order to pay for my journey
+  # As a customer
+  # I need to know where I've travelled from
+  it 'so that I can pay the right far, the card should record where I travelled from' do
+    oyster = Oystercard.new
+    oyster.top_up(5)
+    expect {oyster.touch_in(station)}.to_not raise_error
+  end
+
 
 end
