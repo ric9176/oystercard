@@ -1,4 +1,3 @@
-
 describe "user stories" do
 
  # In order to use public transport
@@ -42,6 +41,22 @@ describe "user stories" do
   it 'should know if it is currently been used in a journey or not' do
     oyster = Oystercard.new
     expect {oyster.in_journey?}.not_to raise_error
+  end
+  #   In order to pay for my journey
+  # As a customer
+  # I need to have the minimum amount (£1) for a single journey.
+  it 'So that user can pay for the journey, should prevent user to touch in when balance is low' do
+    oyster = Oystercard.new
+    expect {oyster.touch_in}.to raise_error
+  end
+
+  #   In order to pay for my journey
+  # As a customer
+  # When my journey is complete, I need the correct amount deducted from my card
+  it 'So that user can pay for the journey, the correct amount should be deducted on touch out' do
+    oyster = Oystercard.new
+    oyster.top_up(5)
+    expect {oyster.touch_out}.to_not raise_error
   end
 
 end

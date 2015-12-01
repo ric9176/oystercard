@@ -1,8 +1,2 @@
-<<<<<<< HEAD
---color --format documentation --format progress
+--color --format documentation
 --require spec_helper
-
-=======
---color
---require spec_helper
->>>>>>> 43d38b9d16d2e576158a266b28bbbfc5141f6c1a
