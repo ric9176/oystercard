@@ -50,6 +50,16 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  # Limits the available syntax to the non-monkey patched syntax that is
+  # recommended. For more details, see:
+  #   - http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax
+  #   - http://teaisaweso.me/blog/2013/05/27/rspecs-new-message-expectation-syntax/
+  #   - http://myronmars.to/n/dev-blog/2014/05/notable-changes-in-rspec-3#new__config_option_to_disable_rspeccore_monkey_patching
+=======
+>>>>>>> 43d38b9d16d2e576158a266b28bbbfc5141f6c1a
   # Allows RSpec to persist some state between runs in order to support
   # the `--only-failures` and `--next-failure` CLI options. We recommend
   # you configure your source control system to ignore this file.
@@ -60,6 +70,10 @@ RSpec.configure do |config|
   #   - http://rspec.info/blog/2012/06/rspecs-new-expectation-syntax/
   #   - http://www.teaisaweso.me/blog/2013/05/27/rspecs-new-message-expectation-syntax/
   #   - http://rspec.info/blog/2014/05/notable-changes-in-rspec-3/#zero-monkey-patching-mode
+<<<<<<< HEAD
+=======
+>>>>>>> day1
+>>>>>>> 43d38b9d16d2e576158a266b28bbbfc5141f6c1a
   config.disable_monkey_patching!
 
   # This setting enables warnings. It's recommended, but in some cases may

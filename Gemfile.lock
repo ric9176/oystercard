@@ -2,6 +2,24 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.2)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.2)
+=======
+>>>>>>> 43d38b9d16d2e576158a266b28bbbfc5141f6c1a
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -15,12 +33,20 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+<<<<<<< HEAD
+=======
+>>>>>>> day1
+>>>>>>> 43d38b9d16d2e576158a266b28bbbfc5141f6c1a
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+<<<<<<< HEAD
   rspec (>= 3.4.0)
+=======
+  rspec
+>>>>>>> 43d38b9d16d2e576158a266b28bbbfc5141f6c1a
 
 BUNDLED WITH
    1.10.6

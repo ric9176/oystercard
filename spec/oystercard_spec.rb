@@ -1,21 +1,17 @@
 require 'oystercard'
 
 describe Oystercard do
-subject(:oyster) { described_class.new }
 
+  subject(:card) {described_class.new}
 
-  it "Should have a default balance of zero" do
-    expect(oyster.balance).to eq 0
+  it 'should have a balance of 0' do
+    expect(subject.balance).to eq 0
   end
 
-  it "should add the top up amount to the current balance" do
-    oyster.top_up(30)
-    expect(oyster.balance).to eq 30
-  end
-
-  it "Will raise error if user tries to increase the balance past £90" do
-    allow(oyster).to receive(:balance).and_return(90)
-    expect{oyster.top_up(10000)}.to raise_error "£90 maximum limit would be exceeded!"
+  describe '#top_up' do
+    it 'should increase the existing balance by an amount' do
+        expect{ card.top_up(1) }.to change {card.balance}.by 1
+    end
   end
 
 end
