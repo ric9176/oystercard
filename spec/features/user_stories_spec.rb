@@ -36,4 +36,12 @@ describe "user stories" do
     expect {oyster.deduct(5)}.not_to raise_error
   end
 
+  # In order to get through the barriers.
+  # As a customer
+  # I need to touch in and out.
+  it 'should know if it is currently been used in a journey or not' do
+    oyster = Oystercard.new
+    expect {oyster.in_journey?}.not_to raise_error
+  end
+
 end
