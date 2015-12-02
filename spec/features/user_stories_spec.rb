@@ -1,7 +1,7 @@
 describe 'User Stories' do
 
   let(:oystercard) { Oystercard.new }
-  let(:station) { double :station }
+  let(:station) { Station.new('Aldgate', 2) }
   let(:fare) { Oystercard::MIN_FARE}
 
   # In order to use public transport
@@ -35,7 +35,7 @@ describe 'User Stories' do
   it 'deduts appropriate fare from the oystercard' do
       oystercard.top_up(fare)
       oystercard.touch_in(station)
-      expect { oystercard.touch_out }.to change { oystercard.balance }.by(-fare)
+      expect { oystercard.touch_out(station) }.to change { oystercard.balance }.by(-fare)
     end
   #
   # In order to get through the barriers
@@ -48,7 +48,7 @@ describe 'User Stories' do
       expect(oystercard.station).to eq 'brixton'
     end
     it 'allows customers to touch out' do
-      oystercard.touch_out
+      oystercard.touch_out(station)
       expect(oystercard.station).to eq nil
     end
   end
@@ -66,7 +66,7 @@ describe 'User Stories' do
     it 'charges for the journey on touch out' do
       oystercard.top_up(fare)
       oystercard.touch_in(station)
-      expect { oystercard.touch_out }.to change { oystercard.balance }.by(-fare)
+      expect { oystercard.touch_out(station) }.to change { oystercard.balance }.by(-fare)
     end
 
   #
@@ -79,16 +79,24 @@ describe 'User Stories' do
       expect(oystercard.station).to eq station
     end
 
-
-
   # In order to know where I have been
   # As a customer
   # I want to see to all my previous trips
+
+    it 'shows the history of journeys' do
+      oystercard.top_up(fare)
+      oystercard.touch_in(station)
+      oystercard.touch_out(station)
+      expect(oystercard.history[:journey1][1]).to eq station
+    end
   #
   # In order to know how far I have travelled
   # As a customer
   # I want to know what zone a station is in
-  #
+    it 'each station has a zone' do
+      expect(station.zone).to eq 2
+    end
+
   # In order to be charged correctly
   # As a customer
   # I need a penalty charge deducted if I fail to touch in or out
