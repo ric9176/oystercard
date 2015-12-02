@@ -20,19 +20,38 @@ describe 'User Stories' do
   # As a customer
   # I don't want to put too much money on my card
   it 'has a maximum balance' do
-    MAX_BALANCE = Oystercard::MAX_BALANCE
-    over_90 = "the balance cannot be over #{MAX_BALANCE} pounds"
-    oystercard.top_up(MAX_BALANCE)
+    balance = Oystercard::MAX_BALANCE
+    over_90 = "the balance cannot be over #{balance} pounds"
+    oystercard.top_up(balance)
     expect { oystercard.top_up(1) }.to raise_error over_90
   end
 
   # In order to pay for my journey
   # As a customer
   # I need my fare deducted from my card
+
+  it 'deduts appropriate fare from the oystercard' do
+      oystercard.top_up(10)
+      station = 'brixton'
+      fare = Oystercard::MIN_FARE
+      oystercard.touch_in(station)
+      expect { oystercard.touch_out }.to change { oystercard.balance }.by(-fare)
+    end
   #
   # In order to get through the barriers
   # As a customer
   # I need to touch in and out
+  describe '#touch_in, #touch_out' do
+    it 'allows customers to touch in' do
+      oystercard.top_up(10)
+      oystercard.touch_in('brixton')
+      expect(oystercard.station).to eq 'brixton'
+    end
+    it 'allows customers to touch out' do
+      oystercard.touch_out
+      expect(oystercard.station).to eq nil
+    end
+  end
   #
   # In order to pay for my journey
   # As a customer
