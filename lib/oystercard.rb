@@ -1,3 +1,4 @@
+require_relative 'journey'
 class Oystercard
 
   attr_reader :balance, :station, :history
@@ -10,7 +11,7 @@ class Oystercard
     @balance = 0
     @station = nil
     @history = {}
-    @journey = []
+    @journey = Journey.new
 
   end
 
@@ -26,19 +27,21 @@ class Oystercard
   def touch_in(station)
     fail "cannot touch in if balance is less #{MIN_BALANCE} pound" if insufficent_balance?
     @station = station
-    @journey << station
+    @journey.entry_station=(station)
   end
 
-  def touch_out(exit_station)
-    @journey << exit_station
-    history[:journey1] = [station, exit_station]
+  def touch_out(station)
+    @journey.exit_station=(station)
+    history[:"journey#{index}"] = @journey
     @station = nil
-    @journey = []
+    @journey = Journey.new
 
     deduct(MIN_FARE)
   end
 
-
+  def index
+    history.count + 1
+  end
 
   private
 

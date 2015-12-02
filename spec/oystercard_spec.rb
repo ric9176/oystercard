@@ -5,6 +5,7 @@ describe Oystercard do
   subject(:oystercard) { described_class.new }
   let(:station) { double :station }
   let(:station2) { double :station2 }
+  let(:journey) { double :journey, entry_station: station, exit_station: station2 }
 
   it 'sets the initial balance to 0' do
     expect(oystercard.balance).to eq 0
@@ -72,9 +73,10 @@ describe Oystercard do
     end
     describe '#history' do
       it 'returns a hash containing journey history' do
-        oystercard.touch_in(station)
+        oystercard.touch_in(:Brixton)
         oystercard.touch_out(station2)
-        expect(oystercard.history).to eq({journey1: [station, station2]})
+
+        expect(oystercard.history[:journey1].entry_station).to eq(:Brixton)
       end
       it 'is an empty hash by default' do
         expect(oystercard.history).to be_empty

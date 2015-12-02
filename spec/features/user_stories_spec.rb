@@ -87,7 +87,7 @@ describe 'User Stories' do
       oystercard.top_up(fare)
       oystercard.touch_in(station)
       oystercard.touch_out(station)
-      expect(oystercard.history[:journey1][1]).to eq station
+      expect(oystercard.history[:journey1].exit_station).to eq station
     end
   #
   # In order to know how far I have travelled
@@ -100,7 +100,12 @@ describe 'User Stories' do
   # In order to be charged correctly
   # As a customer
   # I need a penalty charge deducted if I fail to touch in or out
-  #
+
+    it 'applies a penalty_fare if card is not touchin or out' do
+      expect { oystercard.touch_out('brixton') }.to change { oystercard.balance }.by(-6)
+    end
+
+      #
   # In order to be charged the correct amount
   # As a customer
   # I need to have the correct fare calculated
