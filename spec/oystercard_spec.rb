@@ -30,6 +30,8 @@ describe Oystercard do
       card.top_up(Oystercard::MAXIMUM_BALANCE)
     end
 
+    describe '#in_journey' do
+
     it 'should return in journey true after touch in is called' do
       card.touch_in(station)
       expect(card).to be_in_journey
@@ -41,21 +43,37 @@ describe Oystercard do
       expect(card).not_to be_in_journey
     end
 
+    end
+
+    describe '#top_up' do
+
     it 'should raise an error if the amount exceeds the limit' do
       amount = 5
       expect{ card.top_up(amount)}.to raise_error("card limit of #{Oystercard::MAXIMUM_BALANCE} exceeded")
     end
+
+    end
+
+    describe '#deduct' do
 
     it 'should return the updated balance when money is deducted' do
       amount = 5
       expect(card.deduct(amount)).to eq Oystercard::MAXIMUM_BALANCE - amount
     end
 
+    end
+
+    describe '#balance' do
+
     it 'should, on touch out, update the balance deducting the journey fare' do
       card.touch_in(station)
       card.touch_out(station)
       expect(card.balance).to eq Oystercard::MAXIMUM_BALANCE - Oystercard::MINIMUM_FARE
     end
+
+    end
+
+    describe '#journey' do
 
     it 'should, on touch in, record the entry station' do
       card.touch_in(station)
@@ -68,6 +86,10 @@ describe Oystercard do
       expect(card.journey[:entry]).to eq nil
     end
 
+    end
+
+    describe '#journeys' do
+
     it 'should be empty by deafault' do
       expect(card.journeys).to be_empty
     end
@@ -76,6 +98,8 @@ describe Oystercard do
       card.touch_in(entry_station)
       card.touch_out(exit_station)
       expect(card.journeys).to include journey
+    end
+
     end
 
   end
