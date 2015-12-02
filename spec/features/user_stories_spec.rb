@@ -1,6 +1,8 @@
 describe 'User Stories' do
 
   let(:oystercard) { Oystercard.new }
+  let(:station) { double :station }
+  let(:fare) { Oystercard::MIN_FARE}
 
   # In order to use public transport
   # As a customer
@@ -31,9 +33,7 @@ describe 'User Stories' do
   # I need my fare deducted from my card
 
   it 'deduts appropriate fare from the oystercard' do
-      oystercard.top_up(10)
-      station = 'brixton'
-      fare = Oystercard::MIN_FARE
+      oystercard.top_up(fare)
       oystercard.touch_in(station)
       expect { oystercard.touch_out }.to change { oystercard.balance }.by(-fare)
     end
@@ -43,7 +43,7 @@ describe 'User Stories' do
   # I need to touch in and out
   describe '#touch_in, #touch_out' do
     it 'allows customers to touch in' do
-      oystercard.top_up(10)
+      oystercard.top_up(fare)
       oystercard.touch_in('brixton')
       expect(oystercard.station).to eq 'brixton'
     end
@@ -56,15 +56,31 @@ describe 'User Stories' do
   # In order to pay for my journey
   # As a customer
   # I need to have the minimum amount for a single journey
-  #
+    it 'fails if there is not a min balance on the card' do
+      less_than_1 = "cannot touch in if balance is less #{fare} pound"
+      expect { oystercard.touch_in(station) }.to raise_error less_than_1
+    end
   # In order to pay for my journey
   # As a customer
   # I need to pay for my journey when it's complete
+    it 'charges for the journey on touch out' do
+      oystercard.top_up(fare)
+      oystercard.touch_in(station)
+      expect { oystercard.touch_out }.to change { oystercard.balance }.by(-fare)
+    end
+
   #
   # In order to pay for my journey
   # As a customer
   # I need to know where I've travelled from
-  #
+    it 'tells the customer where they have travelled from' do
+      oystercard.top_up(fare)
+      oystercard.touch_in(station)
+      expect(oystercard.station).to eq station
+    end
+
+
+
   # In order to know where I have been
   # As a customer
   # I want to see to all my previous trips
