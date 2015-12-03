@@ -29,7 +29,7 @@ class Oystercard
   end
 
   def update_history(journey)
-    history[:"journey#{index}"] = journey
+    history[:"journey#{index}"] = journey.current_journey
   end
 
   def top_up(amount)

@@ -3,6 +3,7 @@ describe "user stories" do
   let(:oyster) { Oystercard.new }
   let(:station) { Station.new('Brixton', 2) }
 
+
  # In order to use public transport
  # As a customer
  # I want money on my card
@@ -39,10 +40,7 @@ describe "user stories" do
   # In order to get through the barriers.
   # As a customer
   # I need to touch in and out.
-  it 'should know if it is currently been used in a journey or not' do
 
-    expect {oyster.in_journey?}.not_to raise_error
-  end
   #   In order to pay for my journey
   # As a customer
   # I need to have the minimum amount (£1) for a single journey.
@@ -81,6 +79,20 @@ describe "user stories" do
 # I want to know what zone a station is in
   it 'should display the zone' do
     expect(station.zone).to eq 2
+  end
+
+  context 'history' do
+    it 'returns the history of all journeys taken' do
+      oyster.top_up(10)
+      oyster.touch_in('Brixton')
+      oyster.touch_out('Aldgate')
+      expect(oyster.history).to eq({:journey1=>{:entry_station=>"Brixton", :exit_station=>"Aldgate"}})
+    end
+    it 'returns the entry station' do
+    oyster.top_up(10)
+    oyster.touch_in('Brixton')
+    expect(oyster.journey.current_journey[:entry_station]).to eq 'Brixton'
+  end
   end
   # In order to be charged correctly
   # As a customer

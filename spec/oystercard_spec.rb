@@ -12,10 +12,6 @@ describe Oystercard do
     expect(card.balance).to eq 0
   end
 
-  it 'should return false when not being used in a journey' do
-    expect(card).not_to be_in_journey
-  end
-
   it 'should increase the existing balance by an amount' do
       expect{ card.top_up(1) }.to change {card.balance}.by 1
   end
@@ -30,20 +26,6 @@ describe Oystercard do
       card.top_up(Oystercard::MAXIMUM_BALANCE)
     end
 
-    describe '#in_journey' do
-
-    it 'should return in journey true after touch in is called' do
-      card.touch_in(station)
-      expect(card).to be_in_journey
-    end
-
-    it 'should return in journey false after touch out is called' do
-      card.touch_in(station)
-      card.touch_out(station)
-      expect(card).not_to be_in_journey
-    end
-
-    end
 
     describe '#top_up' do
 
@@ -75,15 +57,10 @@ describe Oystercard do
 
     describe '#journey' do
 
-    it 'should, on touch in, record the entry station' do
-      card.touch_in(station)
-      expect(card.journey[:entry]).to eq station
-    end
-
     it 'should, on touch out, reset the entry station to nil' do
       card.touch_in(station)
       card.touch_out(station)
-      expect(card.journey[:entry]).to eq nil
+      expect(card.journey.current_journey[:entry_station]).to eq nil
     end
 
     end
@@ -103,7 +80,7 @@ describe Oystercard do
     it 'should return a history of journey1' do
       card.touch_in(entry_station)
       card.touch_out(exit_station)
-      expect(card.history).to eq({:journey1=>{:entry=> entry_station, :exit=> exit_station}})
+      expect(card.history).to eq({:journey1=>{:entry_station=>entry_station, :exit_station=>exit_station}})
     end
 
     end
