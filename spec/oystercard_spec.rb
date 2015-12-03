@@ -4,9 +4,9 @@ describe Oystercard do
 
   subject(:card) {described_class.new}
   let(:station) { double :station }
-  let(:entry_station) { double :station }
-  let(:exit_station) { double :station }
-  let(:journey) {{entry: entry_station, exit: exit_station, }}
+  let(:entry_station) { double :station1 }
+  let(:exit_station) { double :station2 }
+  # let(:journey) {{double entry: entry_station, exit: exit_station }}
 
   it 'should have a balance of 0' do
     expect(card.balance).to eq 0
@@ -88,16 +88,22 @@ describe Oystercard do
 
     end
 
-    describe '#journeys' do
+    describe '#history' do
 
     it 'should be empty by deafault' do
-      expect(card.journeys).to be_empty
+      expect(card.history).to be_empty
     end
 
     it 'stores a journey' do
       card.touch_in(entry_station)
       card.touch_out(exit_station)
-      expect(card.journeys).to include journey
+      expect(card.history).to_not be_empty
+    end
+
+    it 'should return a history of journey1' do
+      card.touch_in(entry_station)
+      card.touch_out(exit_station)
+      expect(card.history).to eq({:journey1=>{:entry=> entry_station, :exit=> exit_station}})
     end
 
     end

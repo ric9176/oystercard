@@ -1,14 +1,14 @@
 
 class Oystercard
 
-  attr_reader :balance, :journeys, :journey
+  attr_reader :balance, :history, :journey
 
   MAXIMUM_BALANCE = 90
   MINIMUM_FARE = 1
 
   def initialize
     @balance = 0
-    @journeys = []
+    @history = {}
     @journey = {entry: nil, exit: nil}
   end
 
@@ -36,7 +36,7 @@ class Oystercard
   end
 
   def update_history
-    @journeys << journey
+    history[:"journey#{index}"] = @journey
     @journey = {entry: nil, exit: nil}
   end
 
@@ -47,6 +47,10 @@ class Oystercard
 
   def deduct(amount)
     @balance -= amount
+  end
+
+  def index
+    history.count + 1
   end
 
 

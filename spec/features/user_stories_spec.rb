@@ -75,7 +75,7 @@ describe "user stories" do
   # I want to see to all my previous trips
   it 'so that user can know where he has been, the card should store all previous trips' do
     oyster = Oystercard.new
-    expect {oyster.journeys}.not_to raise_error
+    expect {oyster.history}.not_to raise_error
   end
 
 
