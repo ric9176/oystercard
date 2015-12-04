@@ -41,7 +41,7 @@ describe "user stories" do
   #   In order to pay for my journey
   # As a customer
   # When my journey is complete, I need the correct amount deducted from my card
-  it 'So that user can pay for the journey, the correct amount should be deducted on touch out' do
+  it 'So that user can pay for the journey, the fare should be deducted on touch out' do
     oyster.top_up(5)
     expect {oyster.touch_out(station)}.to change{oyster.balance}.by(-minimum_fare)
   end
@@ -49,8 +49,7 @@ describe "user stories" do
   # In order to pay for my journey
   # As a customer
   # I need to know where I've travelled from
-  it 'so that I can pay the right far, the card should record where I travelled from' do
-
+  it 'so that I can pay the right fare, the card should record where I travelled from' do
     oyster.top_up(5)
     expect {oyster.touch_in(station)}.to_not raise_error
   end

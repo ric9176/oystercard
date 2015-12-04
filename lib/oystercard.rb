@@ -17,7 +17,7 @@ class Oystercard
   end
 
   def touch_in(station)
-    fail "Your balance is too low. Please top up!" if balance < MINIMUM_FARE
+    fail 'Your balance is too low. Please top up!' if balance < MINIMUM_FARE
     journey.update_entry(station)
   end
 
